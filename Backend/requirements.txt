@@ -1,0 +1,10 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+geopandas==1.0.1
+shapely==2.0.6
+pandas==2.2.3
+requests==2.32.3
+pyproj==3.7.0
+numpy>=2.0.0
+scikit-learn>=1.5.0
+python-dotenv==1.0.1
