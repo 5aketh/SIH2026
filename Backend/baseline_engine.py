@@ -32,10 +32,15 @@ def _extract_industrial_points(classified_geojson: dict) -> pd.DataFrame:
         props = feat.get("properties", {})
         if not props.get("inside_industrial", False):
             continue
-        coords = feat.get("geometry", {}).get("coordinates", [None, None])
+        coords = feat.get("geometry", {}).get("coordinates")
+        if not isinstance(coords, (list, tuple)) or len(coords) < 2:
+            continue
+        lon, lat = coords[0], coords[1]
+        if lon is None or lat is None:
+            continue
         rows.append({
-            "longitude": coords[0],
-            "latitude": coords[1],
+            "longitude": lon,
+            "latitude": lat,
             "frp": float(props.get("frp", 0.0)),
             "brightness": float(props.get("brightness", 0.0)),
             "zone_name": props.get("zone_name"),
