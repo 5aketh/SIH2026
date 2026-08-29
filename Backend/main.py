@@ -194,13 +194,13 @@ app.add_middleware(
 
 def _ensure_pipeline():
     """Run pipeline if cache is cold. Returns True on success."""
-    if _cache["classified_geojson"] is None:
+    if any(_cache.get(k) is None for k in ("classified_geojson", "facilities_geojson", "alerts_geojson", "stats")):
         try:
             run_pipeline()
         except Exception as e:
             logger.error(f"Pipeline error on demand: {e}")
             raise HTTPException(status_code=503, detail="Classification pipeline unavailable")
-
+    return True
 
 # ── Routes ────────────────────────────────────────────────────────────────────
 
