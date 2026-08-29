@@ -30,7 +30,8 @@ out body;
 out skel qt;
 """
 
-DATA_DIR = Path(__file__).parent / "data"
+import os
+DATA_DIR = Path(os.environ.get("PYROGUARD_DATA_DIR", str(Path(__file__).parent / "data")))
 OUTPUT_PATH = DATA_DIR / "osm_industrial.geojson"
 CACHE_MAX_AGE_SECONDS = 86400  # 24 hours (OSM data changes slowly)
 
