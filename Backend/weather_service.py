@@ -133,8 +133,9 @@ def enrich_alerts(alerts_geojson: dict) -> dict:
     grid_keys: list[tuple] = []
 
     for feat in features:
-        coords = feat.get("geometry", {}).get("coordinates", [0, 0])
-        lon, lat = coords[0], coords[1]
+        coords = feat.get("geometry", {}).get("coordinates") or []
+        lon = coords[0] if isinstance(coords, (list, tuple)) and len(coords) > 0 else 0.0
+        lat = coords[1] if isinstance(coords, (list, tuple)) and len(coords) > 1 else 0.0
         key = (round(lat, 1), round(lon, 1))
         grid_keys.append(key)
         if key not in grid_cache:
