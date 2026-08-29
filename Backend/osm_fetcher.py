@@ -43,8 +43,7 @@ def is_cache_fresh() -> bool:
     return age < CACHE_MAX_AGE_SECONDS
 
 
-def fetch_overpass() -> dict:
-    """Query Overpass API and return raw JSON response."""
+def fetch_overpass() -> dict | None:
     logger.info("Querying Overpass API for industrial polygons...")
     try:
         resp = requests.post(
