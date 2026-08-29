@@ -31,7 +31,7 @@ FIRMS_URL = (
     f"/VIIRS_SNPP_NRT/{BBOX}/1"  # 1 day
 )
 
-DATA_DIR = Path(__file__).parent / "data"
+DATA_DIR = Path(os.environ.get("PYROGUARD_DATA_DIR", str(Path(__file__).parent / "data")))
 OUTPUT_PATH = DATA_DIR / "firms_points.geojson"
 CACHE_MAX_AGE_SECONDS = 1800  # 30 minutes
 
