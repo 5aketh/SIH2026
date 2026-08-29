@@ -133,8 +133,8 @@ def classify_thermal_points(firms_geojson: dict, osm_geojson: dict) -> dict:
 
         # Identify industrial points
         in_zone_mask = joined["index_right"].notna()
-        firms_gdf.loc[in_zone_mask.values, "inside_industrial"] = True
-
+        in_zone_idx = joined.index[in_zone_mask].unique()
+        firms_gdf.loc[in_zone_idx, "inside_industrial"] = True
         # Assign zone names (take first match if multiple)
         zone_names = joined.groupby(joined.index)[zone_col].first()
         firms_gdf["zone_name"] = zone_names.reindex(firms_gdf.index).values
