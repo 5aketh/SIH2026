@@ -33,8 +33,12 @@ def run_test(name, fn):
 def test_classifier_facility_tags():
     """Classified features should carry osm_id and industrial_type."""
     from classifier import classify_thermal_points
-    firms = json.load(open("data/firms_points.geojson"))
-    osm = json.load(open("data/osm_industrial.geojson"))
+    from pathlib import Path
+    data_dir = Path(__file__).resolve().parent / "data"
+    with open(data_dir / "firms_points.geojson", "r") as f:
+        firms = json.load(f)
+    with open(data_dir / "osm_industrial.geojson", "r") as f:
+        osm = json.load(f)
     result = classify_thermal_points(firms, osm)
     assert result["type"] == "FeatureCollection"
     industrial = [f for f in result["features"] if f["properties"]["inside_industrial"]]
